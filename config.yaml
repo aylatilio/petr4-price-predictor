@@ -1,0 +1,108 @@
+# =============================================================================
+# PETR4 Price Predictor — Central Configuration
+# =============================================================================
+
+project:
+  name: petr4-price-predictor
+  version: "1.0.0"
+  description: "LSTM-based closing price predictor for PETR4 (Petrobras)"
+
+# -----------------------------------------------------------------------------
+# Data settings
+# -----------------------------------------------------------------------------
+data:
+  ticker: "PETR4.SA"
+  start_date: "2014-01-01"
+  end_date: null                 # null = today
+  test_start_date: "2024-01-01"  # data held out for final evaluation
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  predictions_dir: "data/predictions"
+
+# -----------------------------------------------------------------------------
+# Feature engineering
+# -----------------------------------------------------------------------------
+features:
+  sequence_length: 60            # look-back window (days)
+  target_column: "Close"
+  price_columns: ["Open", "High", "Low", "Close"]
+  volume_column: "Volume"
+
+  # Technical indicators to compute and include as features
+  technical_indicators:
+    moving_averages: [7, 14, 21, 50]   # SMA windows
+    rsi_period: 14
+    macd:
+      fast: 12
+      slow: 26
+      signal: 9
+    bollinger_bands:
+      window: 20
+      num_std: 2
+
+# -----------------------------------------------------------------------------
+# Model settings
+# -----------------------------------------------------------------------------
+model:
+  architecture: "LSTM"
+  lstm_units: [128, 64]          # units per LSTM layer
+  dense_units: [32]
+  dropout_rate: 0.2
+  recurrent_dropout: 0.1
+  activation: "relu"
+
+training:
+  epochs: 100
+  batch_size: 32
+  learning_rate: 0.001
+  patience: 15                   # early-stopping patience
+  validation_split: 0.1
+  shuffle: false                 # must be false for time series
+  random_seed: 42
+
+# -----------------------------------------------------------------------------
+# Paths
+# -----------------------------------------------------------------------------
+paths:
+  model_dir: "models/trained"
+  artifacts_dir: "models/artifacts"
+  model_filename: "lstm_petr4.keras"
+  scaler_filename: "scaler.pkl"
+  feature_columns_filename: "feature_columns.json"
+  training_history_filename: "training_history.json"
+
+# -----------------------------------------------------------------------------
+# Evaluation / backtesting
+# -----------------------------------------------------------------------------
+evaluation:
+  walk_forward:
+    initial_train_size: 0.70     # fraction of data for first training window
+    step_size: 30                # days between each retrain step
+    forecast_horizon: 1          # days ahead to predict
+
+# -----------------------------------------------------------------------------
+# API
+# -----------------------------------------------------------------------------
+api:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 1
+  reload: false
+  log_level: "info"
+  title: "PETR4 Price Predictor API"
+  description: "REST API for predicting next-day PETR4 closing price using LSTM"
+  version: "1.0.0"
+
+# -----------------------------------------------------------------------------
+# Monitoring
+# -----------------------------------------------------------------------------
+monitoring:
+  log_dir: "logs"
+  log_level: "INFO"
+  prometheus:
+    enabled: true
+    port: 8001
+  drift_detection:
+    enabled: true
+    # Alert if prediction deviates more than this % from last known close
+    alert_threshold_pct: 15.0

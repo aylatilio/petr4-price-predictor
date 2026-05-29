@@ -1,0 +1,13 @@
+[
+  "tests/test_api.py::TestHealthEndpoint::test_response_has_required_fields",
+  "tests/test_api.py::TestHealthEndpoint::test_returns_200",
+  "tests/test_api.py::TestHealthEndpoint::test_status_is_valid_value",
+  "tests/test_api.py::TestMetricsEndpoint::test_contains_petr4_metric_names",
+  "tests/test_api.py::TestMetricsEndpoint::test_content_type_is_prometheus",
+  "tests/test_api.py::TestMetricsEndpoint::test_returns_200",
+  "tests/test_api.py::TestModelInfoEndpoint::test_response_has_required_fields",
+  "tests/test_api.py::TestModelInfoEndpoint::test_returns_200",
+  "tests/test_api.py::TestModelInfoEndpoint::test_ticker_is_petr4",
+  "tests/test_api.py::TestPredictEndpoint::test_invalid_custom_data_returns_422",
+  "tests/test_api.py::TestPredictEndpoint::test_returns_503_when_model_not_loaded"
+]
