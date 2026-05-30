@@ -5,7 +5,6 @@ Uses plain functions (not classes) to ensure pytest fixture injection works
 correctly with the module-scoped api_client fixture in conftest.py.
 """
 
-
 # ---------------------------------------------------------------------------
 # /health
 # ---------------------------------------------------------------------------
