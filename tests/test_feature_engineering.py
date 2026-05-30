@@ -9,10 +9,13 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from src.data.feature_engineering import (add_technical_indicators,
-                                          compute_bollinger_bands,
-                                          compute_macd, compute_rsi,
-                                          compute_sma)
+from src.data.feature_engineering import (
+    add_technical_indicators,
+    compute_bollinger_bands,
+    compute_macd,
+    compute_rsi,
+    compute_sma,
+)
 
 
 def _make_price_series(n: int = 100, seed: int = 42) -> pd.Series:

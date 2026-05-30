@@ -8,8 +8,13 @@ and type/shape contracts.
 import numpy as np
 import pytest
 
-from src.evaluation.metrics import (compute_all_metrics, compute_mae,
-                                    compute_mape, compute_r2, compute_rmse)
+from src.evaluation.metrics import (
+    compute_all_metrics,
+    compute_mae,
+    compute_mape,
+    compute_r2,
+    compute_rmse,
+)
 
 
 class TestComputeRmse:

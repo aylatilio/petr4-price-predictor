@@ -24,13 +24,21 @@ from fastapi import FastAPI, HTTPException, Request, Response
 from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 
 from api.config import get_settings
-from api.schemas import (HealthResponse, ModelInfoResponse, PredictionResponse,
-                         PredictRequest)
+from api.schemas import (
+    HealthResponse,
+    ModelInfoResponse,
+    PredictionResponse,
+    PredictRequest,
+)
 from src.data.collector import download_stock_data
 from src.data.preprocessor import prepare_inference_sequence
 from src.models.lstm_model import load_model, predict_next_close
-from src.monitoring.logger import (DATA_FETCH_LATENCY, PREDICTION_LATENCY,
-                                   check_drift, setup_logging)
+from src.monitoring.logger import (
+    DATA_FETCH_LATENCY,
+    PREDICTION_LATENCY,
+    check_drift,
+    setup_logging,
+)
 
 # ---------------------------------------------------------------------------
 # Application lifespan (startup / shutdown)
