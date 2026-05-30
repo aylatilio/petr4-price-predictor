@@ -43,7 +43,9 @@ from src.monitoring.logger import setup_logging
     show_default=True,
     help="Path to the project configuration file.",
 )
-def main(ticker: str | None, start: str | None, end: str | None, config_path: str) -> None:
+def main(
+    ticker: str | None, start: str | None, end: str | None, config_path: str
+) -> None:
     """Download historical OHLCV data and save it to data/raw/."""
     with open(config_path) as f:
         config = yaml.safe_load(f)

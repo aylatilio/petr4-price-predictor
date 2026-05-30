@@ -24,16 +24,13 @@ from fastapi import FastAPI, HTTPException, Request, Response
 from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 
 from api.config import get_settings
-from api.schemas import HealthResponse, ModelInfoResponse, PredictRequest, PredictionResponse
+from api.schemas import (HealthResponse, ModelInfoResponse, PredictionResponse,
+                         PredictRequest)
 from src.data.collector import download_stock_data
 from src.data.preprocessor import prepare_inference_sequence
 from src.models.lstm_model import load_model, predict_next_close
-from src.monitoring.logger import (
-    DATA_FETCH_LATENCY,
-    PREDICTION_LATENCY,
-    check_drift,
-    setup_logging,
-)
+from src.monitoring.logger import (DATA_FETCH_LATENCY, PREDICTION_LATENCY,
+                                   check_drift, setup_logging)
 
 # ---------------------------------------------------------------------------
 # Application lifespan (startup / shutdown)
@@ -67,7 +64,9 @@ async def lifespan(app: FastAPI):
         with open(settings.feature_columns_path) as f:
             feature_columns = json.load(f)
     except FileNotFoundError:
-        logger.warning("feature_columns.json not found at %s", settings.feature_columns_path)
+        logger.warning(
+            "feature_columns.json not found at %s", settings.feature_columns_path
+        )
 
     target_col_index = (
         feature_columns.index("Close") if "Close" in feature_columns else 0
@@ -107,7 +106,9 @@ logger = logging.getLogger(__name__)
 
 
 @app.post("/predict", response_model=PredictionResponse, tags=["Prediction"])
-async def predict(request_body: PredictRequest, http_request: Request) -> PredictionResponse:
+async def predict(
+    request_body: PredictRequest, http_request: Request
+) -> PredictionResponse:
     """Predict the next-day closing price for PETR4.
 
     When `use_latest_market_data=True` (default), the API fetches the most
@@ -214,6 +215,7 @@ async def predict(request_body: PredictRequest, http_request: Request) -> Predic
     }
 
     import json as _json
+
     pred_file = pred_dir / "predictions_log.jsonl"
     with open(pred_file, "a") as f:
         f.write(_json.dumps(pred_record) + "\n")

@@ -103,7 +103,9 @@ def run_walk_forward_validation(
         )
 
         if len(X_train_seq) == 0:
-            logger.warning("Fold %d: not enough data to build sequences. Skipping.", fold)
+            logger.warning(
+                "Fold %d: not enough data to build sequences. Skipping.", fold
+            )
             train_end += step_size
             continue
 
@@ -139,7 +141,9 @@ def run_walk_forward_validation(
             if seq_start < 0:
                 continue
 
-            sequence = scaled[seq_start:pred_idx].reshape(1, sequence_length, n_features)
+            sequence = scaled[seq_start:pred_idx].reshape(
+                1, sequence_length, n_features
+            )
             scaled_pred = model.predict(sequence, verbose=0)[0][0]
 
             # Inverse transform

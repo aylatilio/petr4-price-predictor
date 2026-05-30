@@ -52,7 +52,9 @@ def main(output: str, config_path: str) -> None:
 
     # Load raw data and compute features
     raw_df = load_raw_data(ticker=ticker, raw_dir=raw_dir)
-    df_full = add_technical_indicators(raw_df, config["features"]["technical_indicators"])
+    df_full = add_technical_indicators(
+        raw_df, config["features"]["technical_indicators"]
+    )
 
     feature_columns = [c for c in df_full.columns if df_full[c].dtype in [float]]
     target_col_index = feature_columns.index(config["features"]["target_column"])
@@ -75,7 +77,9 @@ def main(output: str, config_path: str) -> None:
             "predicted_close": results["predictions"],
         }
     )
-    results_df["abs_error"] = abs(results_df["actual_close"] - results_df["predicted_close"])
+    results_df["abs_error"] = abs(
+        results_df["actual_close"] - results_df["predicted_close"]
+    )
 
     output_path = Path(output)
     output_path.parent.mkdir(parents=True, exist_ok=True)

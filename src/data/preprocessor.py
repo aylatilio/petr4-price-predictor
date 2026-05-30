@@ -165,7 +165,9 @@ def preprocess_pipeline(
     df = add_technical_indicators(raw_df, ind_cfg)
 
     # Determine feature columns (all numeric columns in the DataFrame)
-    feature_columns = [c for c in df.columns if df[c].dtype in [np.float64, np.float32, float]]
+    feature_columns = [
+        c for c in df.columns if df[c].dtype in [np.float64, np.float32, float]
+    ]
     target_col_index = feature_columns.index(target_column)
     logger.info(
         "Using %d features. Target '%s' is at index %d.",
@@ -219,9 +221,7 @@ def preprocess_pipeline(
     X_train, y_train = X_all[:split_idx], y_all[:split_idx]
     X_test, y_test = X_all[split_idx:], y_all[split_idx:]
 
-    logger.info(
-        "Sequences — Train: %s | Test: %s", X_train.shape, X_test.shape
-    )
+    logger.info("Sequences — Train: %s | Test: %s", X_train.shape, X_test.shape)
 
     # 5. Persist arrays
     proc_path = Path(processed_dir)

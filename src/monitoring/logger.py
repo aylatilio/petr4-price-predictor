@@ -146,7 +146,9 @@ def track_prediction_latency(func: Callable) -> Callable:
 # ---------------------------------------------------------------------------
 
 
-def check_drift(predicted_price: float, last_known_close: float, threshold_pct: float) -> bool:
+def check_drift(
+    predicted_price: float, last_known_close: float, threshold_pct: float
+) -> bool:
     """Check whether a prediction deviates excessively from the last known close.
 
     Args:

@@ -10,7 +10,6 @@ from typing import Literal
 
 from pydantic import BaseModel, Field, field_validator
 
-
 # ---------------------------------------------------------------------------
 # Request schemas
 # ---------------------------------------------------------------------------
@@ -49,9 +48,7 @@ class PredictRequest(BaseModel):
         for i, row in enumerate(v):
             missing = required_keys - set(row.keys())
             if missing:
-                raise ValueError(
-                    f"Row {i} is missing required keys: {missing}"
-                )
+                raise ValueError(f"Row {i} is missing required keys: {missing}")
         return v
 
 
@@ -62,6 +59,7 @@ class PredictRequest(BaseModel):
 
 class PredictionResponse(BaseModel):
     """Response body for POST /predict."""
+
     model_config = {"protected_namespaces": ()}
 
     ticker: str = Field(description="Ticker symbol predicted (e.g. 'PETR4.SA').")
@@ -79,11 +77,14 @@ class PredictionResponse(BaseModel):
         default=False,
         description="True if the prediction deviates by more than the configured threshold.",
     )
-    latency_ms: float = Field(description="End-to-end prediction latency in milliseconds.")
+    latency_ms: float = Field(
+        description="End-to-end prediction latency in milliseconds."
+    )
 
 
 class HealthResponse(BaseModel):
     """Response body for GET /health."""
+
     model_config = {"protected_namespaces": ()}
 
     status: Literal["ok", "degraded", "error"] = "ok"
@@ -93,6 +94,7 @@ class HealthResponse(BaseModel):
 
 class ModelInfoResponse(BaseModel):
     """Response body for GET /model/info."""
+
     model_config = {"protected_namespaces": ()}
 
     ticker: str

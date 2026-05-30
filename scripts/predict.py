@@ -19,12 +19,12 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+import json
+
 from src.data.collector import download_stock_data
 from src.data.preprocessor import load_scaler, prepare_inference_sequence
 from src.models.lstm_model import load_model, predict_next_close
 from src.monitoring.logger import setup_logging
-
-import json
 
 
 @click.command()
@@ -60,9 +60,7 @@ def main(days_back: int, use_cached: bool, config_path: str) -> None:
     model_path = str(
         Path(config["paths"]["model_dir"]) / config["paths"]["model_filename"]
     )
-    scaler_path = str(
-        Path(artifacts_dir) / config["paths"]["scaler_filename"]
-    )
+    scaler_path = str(Path(artifacts_dir) / config["paths"]["scaler_filename"])
     feature_columns_path = str(
         Path(artifacts_dir) / config["paths"]["feature_columns_filename"]
     )
@@ -70,14 +68,19 @@ def main(days_back: int, use_cached: bool, config_path: str) -> None:
     # Load data: from disk cache or live download
     if use_cached:
         import pandas as pd
-        csv_path = Path(config["data"]["raw_dir"]) / f"{ticker.replace('.', '_')}_raw.csv"
+
+        csv_path = (
+            Path(config["data"]["raw_dir"]) / f"{ticker.replace('.', '_')}_raw.csv"
+        )
         logger.info("Loading cached data from %s", csv_path)
         recent_df = pd.read_csv(csv_path, index_col="Date", parse_dates=True)
     else:
         end_date = datetime.today().strftime("%Y-%m-%d")
         start_date = (datetime.today() - timedelta(days=days_back)).strftime("%Y-%m-%d")
         logger.info("Fetching %s from %s to %s", ticker, start_date, end_date)
-        recent_df = download_stock_data(ticker=ticker, start_date=start_date, end_date=end_date)
+        recent_df = download_stock_data(
+            ticker=ticker, start_date=start_date, end_date=end_date
+        )
 
     last_known_close = float(recent_df["Close"].iloc[-1])
 

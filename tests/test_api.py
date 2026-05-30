@@ -7,7 +7,6 @@ correctly with the module-scoped api_client fixture in conftest.py.
 
 import pytest
 
-
 # ---------------------------------------------------------------------------
 # /health
 # ---------------------------------------------------------------------------
@@ -56,8 +55,15 @@ def test_model_info_returns_200(api_client):
 
 def test_model_info_has_required_fields(api_client):
     data = api_client.get("/model/info").json()
-    required = {"ticker", "architecture", "sequence_length", "n_features",
-                "feature_columns", "model_version", "model_path"}
+    required = {
+        "ticker",
+        "architecture",
+        "sequence_length",
+        "n_features",
+        "feature_columns",
+        "model_version",
+        "model_path",
+    }
     assert required.issubset(data.keys())
 
 

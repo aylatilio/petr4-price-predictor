@@ -49,7 +49,9 @@ def compute_mae(y_true: np.ndarray, y_pred: np.ndarray) -> float:
     return float(np.mean(np.abs(y_true - y_pred)))
 
 
-def compute_mape(y_true: np.ndarray, y_pred: np.ndarray, epsilon: float = 1e-8) -> float:
+def compute_mape(
+    y_true: np.ndarray, y_pred: np.ndarray, epsilon: float = 1e-8
+) -> float:
     """Mean Absolute Percentage Error.
 
     Expresses error relative to the true value (percentage). A small

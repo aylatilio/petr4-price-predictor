@@ -47,6 +47,8 @@ _register_tf_stub()
 def api_client():
     """Provide a TestClient with the lifespan context active."""
     from fastapi.testclient import TestClient
+
     from api.app import app
+
     with TestClient(app, raise_server_exceptions=False) as client:
         yield client
