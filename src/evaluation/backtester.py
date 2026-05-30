@@ -21,7 +21,6 @@ import pandas as pd
 from src.data.preprocessor import build_sequences, fit_and_save_scaler
 from src.evaluation.metrics import compute_all_metrics
 from src.models.lstm_model import build_lstm_model
-from src.training.trainer import train
 
 logger = logging.getLogger(__name__)
 

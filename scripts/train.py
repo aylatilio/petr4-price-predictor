@@ -25,7 +25,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from src.data.collector import load_raw_data
 from src.data.preprocessor import preprocess_pipeline
 from src.evaluation.metrics import compute_all_metrics
-from src.models.lstm_model import load_model, predict_next_close
+from src.models.lstm_model import predict_next_close
 from src.monitoring.logger import setup_logging
 from src.training.trainer import train
 

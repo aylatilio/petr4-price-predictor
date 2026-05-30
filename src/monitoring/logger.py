@@ -12,13 +12,12 @@ standard `logging` library and inherit this configuration.
 """
 
 import logging
-import os
 import time
 from functools import wraps
 from pathlib import Path
 from typing import Callable
 
-from prometheus_client import Counter, Gauge, Histogram, Summary
+from prometheus_client import Counter, Gauge, Histogram
 
 # ---------------------------------------------------------------------------
 # Structured logging setup

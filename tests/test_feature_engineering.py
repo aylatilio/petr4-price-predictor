@@ -7,7 +7,6 @@ that the output shape matches expectations.
 
 import numpy as np
 import pandas as pd
-import pytest
 
 from src.data.feature_engineering import (
     add_technical_indicators,
