@@ -33,7 +33,9 @@ COPY api/        ./api/
 COPY src/        ./src/
 COPY config.yaml ./config.yaml
 
-# Models and artifacts are mounted at runtime (via docker-compose volume)
+# Copy trained model and artifacts into the image (required for Cloud Run).
+# For local development, these files are mounted via docker-compose volume instead.
+COPY models/     ./models/
 RUN mkdir -p models/trained models/artifacts logs
 
 # Make Python packages from builder available
