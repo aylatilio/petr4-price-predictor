@@ -147,6 +147,33 @@ This starts:
 
 > **Note:** Mount your trained model before starting: the `models/` directory is mounted read-only into the API container. Run `scripts/train.py` locally first.
 
+
+---
+
+## Live API (Render)
+
+The API is deployed and publicly accessible at:
+
+**https://petr4-price-predictor.onrender.com**
+
+> **Note:** The free tier spins down after 15 minutes of inactivity. If the first request is slow (~30 s), the service is waking up — retry and it will respond normally.
+
+| Endpoint | URL |
+|---|---|
+| Health check | https://petr4-price-predictor.onrender.com/health |
+| Swagger UI | https://petr4-price-predictor.onrender.com/docs |
+| Prometheus metrics | https://petr4-price-predictor.onrender.com/metrics |
+
+```bash
+# Quick health check
+curl https://petr4-price-predictor.onrender.com/health
+
+# Predict next-day close
+curl -X POST https://petr4-price-predictor.onrender.com/predict \
+  -H "Content-Type: application/json" \
+  -d '{"use_latest_market_data": true}'
+```
+
 ### API endpoints
 
 | Method | Path | Description |
