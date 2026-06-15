@@ -68,7 +68,9 @@ def main(
     raw_dir = config["data"]["raw_dir"]
 
     if use_cached:
-        logger.info("--use-cached flag set. Loading existing CSV for %s", resolved_ticker)
+        logger.info(
+            "--use-cached flag set. Loading existing CSV for %s", resolved_ticker
+        )
         df = load_raw_data(ticker=resolved_ticker, raw_dir=raw_dir)
     else:
         resolved_start = start or config["data"]["start_date"]
