@@ -48,7 +48,7 @@ from src.monitoring.logger import setup_logging
     "--use-cached",
     is_flag=True,
     default=False,
-    help="Skip download and load from the existing CSV in data/raw/ (useful when yfinance is rate-limited).",
+    help="Skip yfinance download and load the existing CSV from data/raw/ instead.",
 )
 def main(
     ticker: str | None,
